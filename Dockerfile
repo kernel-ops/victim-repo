@@ -1,6 +1,6 @@
 FROM ubuntu:22.04
 
-ARG CACHEBUST=3
+ARG CACHEBUST=2
 
 RUN --mount=type=cache,target=/tmp/shared-cache \
     cp /tmp/shared-cache/marker.txt /result.txt 2>/dev/null; \
