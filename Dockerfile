@@ -1,9 +1,11 @@
 FROM ubuntu:22.04
 
-RUN --mount=type=cache,target=/tmp/shared-cache \
-    echo "check for cross tenant marker" && \
-    cat /tmp/shared-cache/market.txt 2>&1 || echo "no marker found" && \
-    ls -la /tmp/shared-cache/ 2>&1
+ARG CACHEBUST=1
 
-RUN echo "build done"
+RUN --mount=type=cache,target=/tmp/shared-cache \
+     cp /tmp/shared-cache/marker.txt /result.txt 2>/dev/null; \
+    ls -la /tmp/shared-cache/ > /listing.txt 2>&1; \
+    cat /tmp/shared-cache/marker.txt 2>&1 || echo "NO_MARKER_FOUND"
+
+CMD cat /result.txt 2>/dev/null || echo "NO_CROSS_TENANT_DATA"; cat /listing.txt
  
